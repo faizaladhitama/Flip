@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Disbursement;
+use App\Http\Controllers\DisbursementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +18,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/greeting', function () {
+    return 'Hello World';
+});
+
+Route::get('/sample', [DisbursementController::class, 'view']);
+
+

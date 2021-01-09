@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Disbursement;
+use App\Http\Controllers\DisbursementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,9 +20,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('disbursement', 'DisbursementController@index');
-Route::get('disbursement/{disbursement_id}', 'DisbursementController@show');
-Route::post('disbursement', 'DisbursementController@store');
-Route::put('disbursement/{disbursement_id}', 'DisbursementController@update');
-Route::delete('disbursement/{disbursement_id}', 'DisbursementController@delete');
+Route::get('/disbursement', [DisbursementController::class, 'index']);
+Route::get('/disbursement/{disbursement_id}', [DisbursementController::class, 'show']);
+Route::post('/disbursement', [DisbursementController::class, 'store']);
+Route::put('/disbursement/{disbursement_id}', [DisbursementController::class, 'update']);
+Route::delete('/disbursement/{disbursement_id}', [DisbursementController::class, 'delete']);
 
