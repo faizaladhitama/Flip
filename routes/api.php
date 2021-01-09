@@ -19,12 +19,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('disbursement/{transaction_id}', function (Request $request) {
-    return $request->user();
-});
-
-Route::post('disbursement', function (Request $request) {
-    return $request->user();
-});
-
+Route::get('disbursement', 'DisbursementController@index');
+Route::get('disbursement/{id}', 'DisbursementController@show');
+Route::post('disbursement', 'DisbursementController@store');
+Route::put('disbursement/{id}', 'DisbursementController@update');
+Route::delete('disbursement/{id}', 'DisbursementController@delete');
 
