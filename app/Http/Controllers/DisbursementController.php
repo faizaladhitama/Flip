@@ -37,4 +37,9 @@ class DisbursementController extends Controller
 
         return response()->json(null, 204);
     }
+
+    public function view()
+    {
+		return view('view', []);
+    }
 }
