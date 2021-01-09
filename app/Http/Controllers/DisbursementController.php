@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Disbursement;
+use App\Integration\SlightlyBig;
+use Illuminate\Support\Facades\Log;
 
 class DisbursementController extends Controller
 {
@@ -19,7 +21,8 @@ class DisbursementController extends Controller
 
     public function store(Request $request)
     {
-        $disbursement = Disbursement::create($request->all());
+        $slightlyBig = new SlightlyBig();
+        $disbursement = $slightlyBig->sendDisbursement($request->all());
 
         return response()->json($disbursement, 201);
     }
