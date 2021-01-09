@@ -11,29 +11,30 @@ class SlightlyBig
 
 	public function __construct()
 	{
-		$this->authorization = base64_encode($secretKey . ":");
+		$this->authorization = base64_encode($this->secretKey . ":");
 	}
 
 	private function getHeader(){
 		return [
-			'Authorization' => ['Basic '. $this->authorization],
+			'Authorization' => 'Basic '. $this->authorization,
 			'Content-Type' => 'application/x-www-form-urlencoded'
-		]
+		];
 	}
 
 	public function sendDisbursement($data){
-		$url = "/disburse";
+		$url = $this->baseUrl . "/disburse";
 		$curl = new CUrl();
 		$curl->setMethod('POST');
 		$curl->setUrl($url);
 		$curl->setHeader($this->getHeader());
-		$curl->setBody($data);
+		$curl->setBody(json_encode($data));
 
 		$response = $curl->sendRequest();
+		return $response->getBody();
 	}
 
 	public function getDisbursement($transaction_id){
-		$url = "/disburse/$transaction_id";
+		$url = $this->baseUrl . "/disburse/$transaction_id";
 		$curl = new CUrl();
 		$curl->setMethod('GET');
 		$curl->setUrl($url);
@@ -41,5 +42,6 @@ class SlightlyBig
 		$curl->setRequestParamter([]);
 
 		$response = $curl->sendRequest();
+		return $response->getBody();
 	}
 }
