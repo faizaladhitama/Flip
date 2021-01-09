@@ -20,8 +20,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('disbursement', 'DisbursementController@index');
-Route::get('disbursement/{id}', 'DisbursementController@show');
+Route::get('disbursement/{disbursement_id}', 'DisbursementController@show');
 Route::post('disbursement', 'DisbursementController@store');
-Route::put('disbursement/{id}', 'DisbursementController@update');
-Route::delete('disbursement/{id}', 'DisbursementController@delete');
+Route::put('disbursement/{disbursement_id}', 'DisbursementController@update');
+Route::delete('disbursement/{disbursement_id}', 'DisbursementController@delete');
 

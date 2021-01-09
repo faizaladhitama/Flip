@@ -11,30 +11,30 @@ class DisbursementController extends Controller
     {
         return Disbursement::all();
     }
- 
-    public function show($id)
+
+    public function show(Disbursement $disbursement)
     {
-        return Disbursement::find($id);
+        return $disbursement;
     }
 
     public function store(Request $request)
     {
-        return Disbursement::create($request->all());
+        $disbursement = Disbursement::create($request->all());
+
+        return response()->json($disbursement, 201);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Disbursement $disbursement)
     {
-        $Disbursement = Disbursement::findOrFail($id);
-        $Disbursement->update($request->all());
+        $disbursement->update($request->all());
 
-        return $Disbursement;
+        return response()->json($disbursement, 200);
     }
 
-    public function delete(Request $request, $id)
+    public function delete(Disbursement $disbursement)
     {
-        $Disbursement = Disbursement::findOrFail($id);
-        $Disbursement->delete();
+        $disbursement->delete();
 
-        return 204;
+        return response()->json(null, 204);
     }
 }
