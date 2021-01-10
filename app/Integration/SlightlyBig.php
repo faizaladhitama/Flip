@@ -40,7 +40,7 @@ class SlightlyBig
 		$curl->setMethod('GET');
 		$curl->setUrl($url);
 		$curl->setHeader($this->getHeader());
-		$curl->setRequestParamter([]);
+		$curl->setParameterRequest([]);
 
 		$response = $curl->sendRequest();
 		return json_decode($response->getBody()->getContents());
