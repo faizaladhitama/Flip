@@ -17,35 +17,55 @@ class DisbursementController extends Controller
 
     public function show(string $disbursement_id)
     {
-        $disbursement = DisbursementModel::where('disbursement_id', $disbursement_id)->first();
-        return $disbursement;
+        try{
+            $disbursement = DisbursementModel::where('disbursement_id', $disbursement_id)->first();
+            return response()->json(array(
+                'status' => 'success',
+                'data' => $disbursement
+            ), 200);
+        }catch(Exception $e){
+            return response()->json(array(
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ), 500);
+        }
     }
 
     public function store(Request $request)
     {
-        $slightlyBig = new SlightlyBig();
-        $disbursement = $slightlyBig->sendDisbursement($request->all());
+        try{
+            $slightlyBig = new SlightlyBig();
+            $disbursement = $slightlyBig->sendDisbursement($request->all());
 
-        $disbursementModel = new DisbursementModel;
-        $disbursementModel->disbursement_id = $disbursement->id;
-        $disbursementModel->amount = $disbursement->amount;
-        $disbursementModel->status = $disbursement->status;
-        $disbursementModel->disbursement_timestamp = $disbursement->timestamp;
-        $disbursementModel->bank_code = $disbursement->bank_code;
-        $disbursementModel->account_number = $disbursement->account_number;
-        $disbursementModel->beneficiary_name = $disbursement->beneficiary_name;
-        $disbursementModel->remark = $disbursement->remark;
-        $disbursementModel->receipt = $disbursement->receipt;
+            $disbursementModel = new DisbursementModel;
+            $disbursementModel->disbursement_id = $disbursement->id;
+            $disbursementModel->amount = $disbursement->amount;
+            $disbursementModel->status = $disbursement->status;
+            $disbursementModel->disbursement_timestamp = $disbursement->timestamp;
+            $disbursementModel->bank_code = $disbursement->bank_code;
+            $disbursementModel->account_number = $disbursement->account_number;
+            $disbursementModel->beneficiary_name = $disbursement->beneficiary_name;
+            $disbursementModel->remark = $disbursement->remark;
+            $disbursementModel->receipt = $disbursement->receipt;
 
-        if($disbursement->time_served != '0000-00-00 00:00:00'){
-            $disbursementModel->disbursement_time_served = $disbursement->time_served;
+            if($disbursement->time_served != '0000-00-00 00:00:00'){
+                $disbursementModel->time_served = $disbursement->time_served;
+            }
+
+            $disbursementModel->fee = $disbursement->fee;
+
+            $disbursementModel->save();
+
+            return response()->json(array(
+                'status' => 'success',
+                'data' => $disbursement
+            ), 201);
+        }catch(Exception $e){
+            return response()->json(array(
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ), 500);
         }
-
-        $disbursementModel->fee = $disbursement->fee;
-
-        $disbursementModel->save();
-
-        return response()->json($disbursement, 201);
     }
 
     public function update(Request $request, Disbursement $disbursement)
