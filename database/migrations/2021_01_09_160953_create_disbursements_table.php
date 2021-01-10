@@ -24,7 +24,7 @@ class CreateDisbursementsTable extends Migration
             $table->string('beneficiary_name');
             $table->string('remark');
             $table->text('receipt')->nullable();
-            $table->dateTime('disbursement_time_served')->nullable();
+            $table->dateTime('time_served')->nullable();
             $table->integer('fee');
             $table->timestamps();
         });
