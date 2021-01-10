@@ -27,10 +27,11 @@ class SlightlyBig
 		$curl->setMethod('POST');
 		$curl->setUrl($url);
 		$curl->setHeader($this->getHeader());
-		$curl->setBody(json_encode($data));
+		$curl->setBody($data);
 
 		$response = $curl->sendRequest();
-		return $response->getBody();
+
+		return json_decode($response->getBody()->getContents());
 	}
 
 	public function getDisbursement($transaction_id){
@@ -42,6 +43,6 @@ class SlightlyBig
 		$curl->setRequestParamter([]);
 
 		$response = $curl->sendRequest();
-		return $response->getBody();
+		return json_decode($response->getBody()->getContents());
 	}
 }
