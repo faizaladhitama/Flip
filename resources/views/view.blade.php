@@ -77,6 +77,8 @@
           success: function(response) {
             var data = response.data;
             console.log(data); 
+
+            alert('Success. Transaction ID : ' + data.id);
           },
           error: function(jqXHR, exception) {
             if (jqXHR.status === 0) {
