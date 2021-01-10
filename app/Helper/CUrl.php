@@ -2,6 +2,7 @@
 
 namespace App\Helper;
 use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Client;
 
 class CUrl
 {
@@ -32,10 +33,16 @@ class CUrl
 	}		
 
 	public function sendRequest(){
+		$client = new Client();
+		$option = [
+			'headers' => $this->header
+		];
+
 		if($this->method == 'GET'){
-			$response = new Request($this->method, $this->url, $this->header, $this->requestParameter);
+			$response = $client->request($this->method, $this->url, $option);
 		}else{
-			$response = new Request($this->method, $this->url, $this->header, $this->body);
+			$option['form_params'] = $this->body; 
+			$response = $client->request($this->method, $this->url, $option);
 		}
 
 		return $response;
