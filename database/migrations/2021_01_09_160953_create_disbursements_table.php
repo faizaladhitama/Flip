@@ -22,9 +22,9 @@ class CreateDisbursementsTable extends Migration
             $table->string('bank_code');
             $table->string('account_number');
             $table->string('beneficiary_name');
-            $table->string('sample_remark');
-            $table->text('receipt');
-            $table->dateTime('disbursement_time_served');
+            $table->string('remark');
+            $table->text('receipt')->nullable();
+            $table->dateTime('disbursement_time_served')->nullable();
             $table->integer('fee');
             $table->timestamps();
         });
